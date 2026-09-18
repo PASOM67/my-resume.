@@ -1,0 +1,677 @@
+/* =====================================================
+   0. RESET
+===================================================== */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* =====================================================
+   1. DESIGN TOKENS
+===================================================== */
+:root {
+  /* base palette — "blueprint / PCB" theme */
+  --paper: #eef2f6;
+  --surface: #ffffff;
+  --grid-line: rgba(16, 35, 61, 0.055);
+
+  --ink: #10233d;
+  --ink-soft: #51667e;
+  --ink-faint: #8296ab;
+
+  --border: #ccd8e3;
+
+  --accent: #b5651d;
+  /* copper / solder */
+  --accent-dark: #8c4c14;
+  --accent-soft: #f3e3cd;
+  --accent-soft-2: #e7eef5;
+
+  --radius: 10px;
+  --radius-sm: 6px;
+  --gap: 24px;
+  --max-width: 1080px;
+}
+
+/* =====================================================
+   2. BASE TYPE & BACKGROUND
+===================================================== */
+body {
+  font-family: "IBM Plex Sans Thai", "Sarabun", "Segoe UI", Tahoma, sans-serif;
+  font-size: 17px;
+  line-height: 1.8;
+  color: var(--ink);
+  background-color: var(--paper);
+  background-image:
+    linear-gradient(var(--grid-line) 1px, transparent 1px),
+    linear-gradient(90deg, var(--grid-line) 1px, transparent 1px);
+  background-size: 28px 28px;
+}
+
+h1,
+h2,
+h3 {
+  font-family: "Bai Jamjuree", "IBM Plex Sans Thai", sans-serif;
+  line-height: 1.35;
+  color: var(--ink);
+  font-weight: 700;
+}
+
+h1 {
+  font-size: 2.1rem;
+  margin-bottom: 10px;
+}
+
+h2 {
+  font-size: 1.4rem;
+  margin-bottom: 18px;
+}
+
+h3 {
+  font-size: 1.1rem;
+  margin-bottom: 8px;
+}
+
+p {
+  margin-bottom: 12px;
+}
+
+a {
+  color: var(--accent);
+  text-decoration: none;
+}
+
+a:hover {
+  color: var(--accent-dark);
+  text-decoration: underline;
+}
+
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+textarea:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+.tagline {
+  color: var(--ink-soft);
+  font-size: 1.05rem;
+}
+
+.eyebrow {
+  display: inline-block;
+  font-family: "Bai Jamjuree", sans-serif;
+  font-size: 0.78rem;
+  color: var(--accent-dark);
+  background: var(--accent-soft);
+  padding: 3px 10px;
+  border-radius: 999px;
+  margin-bottom: 10px;
+}
+
+/* =====================================================
+   3. HEADER — styled like a PCB edge connector
+===================================================== */
+.site-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 16px;
+  padding: 16px 24px;
+  background-color: var(--ink);
+}
+
+.connector-strip {
+  height: 4px;
+  background: repeating-linear-gradient(90deg,
+      var(--accent) 0 12px,
+      transparent 12px 18px);
+  opacity: 0.55;
+}
+
+.header-inner {
+  width: 100%;
+  max-width: var(--max-width);
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.logo {
+  font-family: "Bai Jamjuree", sans-serif;
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #f4f7fa;
+}
+
+.logo:hover {
+  color: #fff;
+  text-decoration: none;
+}
+
+.menu-toggle {
+  display: none;
+  background: none;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  border-radius: var(--radius-sm);
+  padding: 6px 12px;
+  font-size: 1.3rem;
+  color: #f4f7fa;
+  cursor: pointer;
+}
+
+.site-nav ul {
+  display: flex;
+  list-style: none;
+  gap: 4px;
+  flex-wrap: wrap;
+}
+
+.site-nav a {
+  display: block;
+  padding: 9px 16px;
+  border-radius: var(--radius-sm);
+  color: #b9c9db;
+  font-family: "Bai Jamjuree", sans-serif;
+  font-size: 0.95rem;
+  letter-spacing: 0.01em;
+  transition: background-color 0.2s, color 0.2s;
+}
+
+.site-nav a:hover {
+  background-color: rgba(255, 255, 255, 0.08);
+  color: #ffffff;
+  text-decoration: none;
+}
+
+.site-nav a.active {
+  background-color: var(--accent);
+  color: #ffffff;
+}
+
+/* =====================================================
+   4. PAGE STRUCTURE
+===================================================== */
+main {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: var(--gap) 24px 8px;
+}
+
+section {
+  background-color: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: var(--gap);
+  margin-bottom: var(--gap);
+}
+
+.page-head {
+  background-color: transparent;
+  border: none;
+  padding: 8px 0 4px;
+}
+
+.btn {
+  display: inline-block;
+  padding: 11px 26px;
+  margin-top: 8px;
+  margin-right: 10px;
+  background-color: var(--accent);
+  color: #ffffff;
+  border: none;
+  border-radius: var(--radius-sm);
+  font-size: 1rem;
+  font-family: inherit;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.btn:hover {
+  background-color: var(--accent-dark);
+  text-decoration: none;
+}
+
+.btn.btn-outline {
+  background: transparent;
+  color: var(--accent);
+  border: 1.5px solid var(--accent);
+}
+
+.btn.btn-outline:hover {
+  background: var(--accent-soft);
+  color: var(--accent-dark);
+}
+
+.site-footer {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: var(--gap) 24px;
+  text-align: center;
+  color: var(--ink-faint);
+  font-size: 0.88rem;
+}
+
+/* =====================================================
+   5. HERO (Home)
+===================================================== */
+.hero {
+  display: flex;
+  align-items: center;
+  gap: 32px;
+  flex-wrap: wrap;
+}
+
+.avatar-wrap {
+  position: relative;
+  flex: 0 0 auto;
+}
+
+.avatar {
+  width: 176px;
+  height: 176px;
+  object-fit: cover;
+  border-radius: 50%;
+  border: 4px solid var(--surface);
+  box-shadow: 0 0 0 3px var(--accent);
+  display: block;
+}
+
+.hero-text {
+  flex: 1;
+  min-width: 260px;
+}
+
+/* =====================================================
+   6. TWO-COL (strengths / growth areas)
+===================================================== */
+.two-col {
+  display: flex;
+  gap: var(--gap);
+  flex-wrap: wrap;
+}
+
+.two-col .col {
+  flex: 1;
+  min-width: 260px;
+}
+
+.two-col h3 {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.two-col h3::before {
+  content: "";
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: var(--accent);
+  flex-shrink: 0;
+}
+
+.two-col ul {
+  padding-left: 20px;
+}
+
+.two-col li {
+  margin-bottom: 10px;
+}
+
+/* =====================================================
+   7. SKILLS — styled like IC / chip components
+===================================================== */
+.skill-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 18px;
+}
+
+.skill-card {
+  position: relative;
+  padding: 22px 18px 18px;
+  background-color: var(--accent-soft-2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+/* the little notch that marks pin-1 on an IC package */
+.skill-card::before {
+  content: "";
+  position: absolute;
+  top: -7px;
+  left: 20px;
+  width: 14px;
+  height: 14px;
+  background: var(--paper);
+  border: 1px solid var(--border);
+  border-bottom: none;
+  border-radius: 50% 50% 0 0 / 100% 100% 0 0;
+}
+
+.skill-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 18px rgba(16, 35, 61, 0.1);
+}
+
+.skill-icon {
+  font-size: 1.5rem;
+  display: block;
+  margin-bottom: 8px;
+}
+
+.skill-card h3 {
+  font-size: 1rem;
+  margin-bottom: 4px;
+}
+
+.skill-card p {
+  color: var(--ink-soft);
+  font-size: 0.92rem;
+  margin-bottom: 0;
+}
+
+/* =====================================================
+   8. TIMELINE (Experience)
+===================================================== */
+.timeline-item {
+  padding: 0 0 24px 22px;
+  border-left: 2px solid var(--border);
+  position: relative;
+}
+
+.timeline-item:last-child {
+  padding-bottom: 0;
+  border-left-color: transparent;
+}
+
+.timeline-item::before {
+  content: "";
+  position: absolute;
+  left: -7px;
+  top: 5px;
+  width: 12px;
+  height: 12px;
+  background-color: var(--accent);
+  border: 2px solid var(--surface);
+  border-radius: 50%;
+}
+
+.period {
+  display: inline-block;
+  font-family: "Bai Jamjuree", sans-serif;
+  color: var(--accent-dark);
+  background: var(--accent-soft);
+  padding: 2px 10px;
+  border-radius: 999px;
+  font-size: 0.85rem;
+  margin-bottom: 6px;
+}
+
+.timeline-item h3 {
+  margin-bottom: 4px;
+}
+
+.timeline-item .org {
+  color: var(--ink-soft);
+  font-size: 0.94rem;
+  margin-bottom: 8px;
+  display: block;
+}
+
+.timeline-item ul {
+  padding-left: 20px;
+}
+
+.timeline-item li {
+  margin-bottom: 4px;
+  color: var(--ink-soft);
+}
+
+/* =====================================================
+   9. EDUCATION cards
+===================================================== */
+.edu-grid {
+  display: grid;
+  gap: 14px;
+}
+
+.edu-card {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+  padding: 16px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  background: var(--accent-soft-2);
+}
+
+.edu-badge {
+  flex: 0 0 auto;
+  width: 52px;
+  height: 52px;
+  border-radius: 10px;
+  background: #ffffff;
+  border: 1px solid var(--border);
+  padding: 6px;
+  object-fit: contain;
+}
+
+.edu-body h3 {
+  margin-bottom: 2px;
+}
+
+.edu-body .org {
+  color: var(--ink-soft);
+  display: block;
+  margin-bottom: 2px;
+}
+
+.edu-body .period {
+  margin-top: 4px;
+}
+
+/* =====================================================
+   10. PROJECTS
+===================================================== */
+.project-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: var(--gap);
+}
+
+.project-card {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  overflow: hidden;
+  background: var(--surface);
+  transition: box-shadow 0.2s;
+}
+
+.project-card:hover {
+  box-shadow: 0 8px 22px rgba(16, 35, 61, 0.1);
+}
+
+.project-card .project-top {
+  height: 6px;
+  background: repeating-linear-gradient(90deg,
+      var(--accent) 0 8px,
+      var(--accent-soft) 8px 16px);
+}
+
+.project-body {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.project-body .period {
+  align-self: flex-start;
+}
+
+.project-body p {
+  color: var(--ink-soft);
+  flex: 1;
+}
+
+.tech-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  list-style: none;
+  margin: 4px 0 4px;
+}
+
+.tech-list li {
+  padding: 3px 12px;
+  background-color: var(--accent-soft-2);
+  border: 1px solid var(--border);
+  color: var(--ink);
+  border-radius: 999px;
+  font-family: "Bai Jamjuree", sans-serif;
+  font-size: 0.82rem;
+}
+
+/* =====================================================
+   11. CONTACT
+===================================================== */
+.contact-list {
+  list-style: none;
+}
+
+.contact-list li {
+  display: flex;
+  align-items: baseline;
+  gap: 14px;
+  flex-wrap: wrap;
+  padding: 14px 0;
+  border-bottom: 1px solid var(--border);
+}
+
+.contact-list li:last-child {
+  border-bottom: none;
+}
+
+.contact-list .label {
+  min-width: 110px;
+  font-family: "Bai Jamjuree", sans-serif;
+  font-weight: 600;
+  color: var(--ink-soft);
+}
+
+.contact-list a,
+.contact-list span.value {
+  font-size: 1.02rem;
+}
+
+.contact-note {
+  color: var(--ink-soft);
+  font-size: 0.95rem;
+}
+
+/* =====================================================
+   12. RESPONSIVE — tablet & mobile
+===================================================== */
+@media (max-width: 768px) {
+  body {
+    font-size: 16px;
+  }
+
+  .menu-toggle {
+    display: block;
+  }
+
+  .site-nav {
+    display: none;
+    width: 100%;
+  }
+
+  .site-nav.open {
+    display: block;
+  }
+
+  .site-nav ul {
+    flex-direction: column;
+  }
+
+  .hero {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .two-col h3 {
+    justify-content: center;
+  }
+
+  .two-col ul {
+    text-align: left;
+  }
+
+  h1 {
+    font-size: 1.7rem;
+  }
+
+  h2 {
+    font-size: 1.3rem;
+  }
+
+  main {
+    padding: 16px;
+  }
+
+  section {
+    padding: 18px;
+  }
+
+  .contact-list li {
+    flex-direction: column;
+    gap: 4px;
+  }
+}
+
+@media (max-width: 480px) {
+  .avatar {
+    width: 140px;
+    height: 140px;
+  }
+
+  .btn {
+    display: block;
+    text-align: center;
+    margin-right: 0;
+  }
+}
+
+/* =====================================================
+   13. PRINT
+===================================================== */
+@media print {
+
+  .site-header,
+  .connector-strip,
+  .site-footer,
+  .btn,
+  .menu-toggle {
+    display: none;
+  }
+
+  body {
+    background-image: none;
+  }
+
+  section {
+    border: none;
+    box-shadow: none;
+  }
+}
